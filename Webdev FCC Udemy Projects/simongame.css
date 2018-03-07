@@ -1,0 +1,22 @@
+
+.selection{
+	width: 20%;
+	font-size: 20px;
+}
+
+#container{
+	max-width: 500px;
+}
+
+.textBold{
+	background-color: red;
+}
+
+.removeBold{
+	background-color: none;
+	animation-delay: 2s;
+}
+
+#status{
+	margin-left: 10px;
+}

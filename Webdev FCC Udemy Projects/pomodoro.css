@@ -1,0 +1,23 @@
+#holder{
+	border: 2px solid blue;
+	width: 350px;
+}
+
+.display{
+	font-size: 100px;
+	margin-left: 70px;
+}
+
+.pomodoro{
+	margin-left: 100px;
+	margin-bottom: 20px;
+}
+
+.settings{
+	margin-left: 40px;
+	margin-bottom: 10px;
+}
+
+#timeAdd{
+	margin-right: 20px;
+}

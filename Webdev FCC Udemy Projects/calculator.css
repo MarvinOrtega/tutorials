@@ -1,0 +1,36 @@
+#holder{
+	border: 2px solid blue;
+	width: 	232px;
+}
+
+#buttons{
+	margin: 10px;
+}
+
+.keypad{
+	width: 50px;
+	margin-top: 10px;
+}
+
+#output{
+	font-size: 	35px;
+	background-color: gray;
+	width: 210px;
+	float: right;
+	text-align: right;
+	margin-top: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-bottom: 5px;
+	min-height: 40px;
+}
+
+#input{
+	text-align: right;
+	width: 	210px;
+	background-color: gray;
+	float: right;
+	margin-left: 10px;
+	margin-right: 10px;
+	min-height: 20px;
+}
