@@ -3,6 +3,7 @@ var output = document.querySelector("#output");
 var input = document.querySelector("#input");
 var arr = ["0","1","2","3","4","5","6","7","8","9"];
 var decimal, negative, numerical, aritmethic, leftParenthesis, rightParenthesis, equation, key;
+var leftParenthesisCounter = 0;
 
 function resetFunctions() {
 	decimal = negative = numerical  = aritmethic = leftParenthesis = rightParenthesis = false;
@@ -43,9 +44,9 @@ for(var i = 0; i < keys.length; i++) {
 
 		key = this.value;
 
-		if(input.textContent.toString().length > 10 || output.textContent.length > 10) {
+		if(input.textContent.toString().length > 20 || output.textContent.length > 10) {
 				digitalLimit();
-			}
+		}
 
 		if(key == "CE") {
 			input.textContent = output.textContent = equation = "";
@@ -60,7 +61,7 @@ for(var i = 0; i < keys.length; i++) {
 			numerical = true;
 		}
 
-		else if((key == ".") && (decimal == true)){
+		else if((key == ".") && (decimal == true)) {
 			newOutput();
 			lockFunctions();
 			numerical = true;
@@ -78,13 +79,15 @@ for(var i = 0; i < keys.length; i++) {
 			resetFunctions();
 			aritmethic = rightParenthesis = "invalid";
 			leftParenthesis = true;
+			leftParenthesisCounter ++;
 		}
 
-		else if ((key == ")") && (rightParenthesis != "invalid")) {
+		else if ((key == ")") && (rightParenthesis != "invalid") && (leftParenthesisCounter > 0)) {
 			writeEquation();
 			resetFunctions();
 			aritmethic = true;
 			leftParenthesis = rightParenthesis = "invalid";
+			leftParenthesisCounter --;
 		}
 
 		else if((key == "+/-") && (negative == false) && (numerical == false)) {
@@ -118,6 +121,5 @@ for(var i = 0; i < keys.length; i++) {
 			lockFunctions();
 			aritmethic = true;
 		}
-
 	})
 }
