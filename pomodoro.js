@@ -3,85 +3,107 @@ var displaySeconds = document.querySelector("#seconds");
 var startButton = document.querySelector("#Start");
 var stopButton = document.querySelector("#Stop");
 var resetButton = document.querySelector("#Reset");
-var focusTime = document.querySelector("#time");
+var focusTime = document.querySelector("#focusTime");
 var breakTime = document.querySelector("#breakTime");
-var timeAddButton = document.querySelector("#timeAdd");
-var timeMinusButton = document.querySelector("#timeMinus");
+var focusAddButton = document.querySelector("#focusAdd");
+var focusMinusButton = document.querySelector("#focusMinus");
 var breakAddButton = document.querySelector("#breakAdd");
 var breakMinusButton = document.querySelector("#breakMinus");
 var interval;
-var breakSwitch = 1;
+var breakSwitch = false;
 
-startButton.addEventListener("click", countdown);
+//Focus and break time buttons
 
-stopButton.addEventListener("click",resetInterval);
-
-resetButton.addEventListener("click",function(){
-	resetInterval();
-	displayMinutes.textContent = focusTime.textContent;
-	displaySeconds.textContent = "00";
-	breakSwitch = 1;
-});
-
-timeAddButton.addEventListener("click",function(){
+focusAddButton.addEventListener("click",function() {
 	focusTime.textContent = Number(focusTime.textContent) + 1;
 });
 
-timeMinusButton.addEventListener("click",function(){
-	if(focusTime.textContent < 1){
-	}
-	else {
-		focusTime.textContent = Number(focusTime.textContent) - 1;		
+focusMinusButton.addEventListener("click",function() {
+	if(focusTime.textContent > 1) {
+		focusTime.textContent = Number(focusTime.textContent) - 1;
 	}
 });
 
-breakAddButton.addEventListener("click",function(){
+breakAddButton.addEventListener("click",function() {
 	breakTime.textContent = Number(breakTime.textContent) + 1;
 });
 
 breakMinusButton.addEventListener("click",function(){
-	if(breakTime.textContent < 1){
-	}
-	else {
-		breakTime.textContent = Number(breakTime.textContent) - 1;		
+	if(breakTime.textContent > 1) {
+		breakTime.textContent = Number(breakTime.textContent) - 1;
 	}
 });
 
-function countdown(){
-	interval = setInterval(function(){
-	startButton.setAttribute("disabled",true);	
-	if(displayMinutes.textContent == 0 && displaySeconds.textContent == 0 && breakSwitch == 1){
-		clearInterval(interval);
-		interval = "";
-		breakSwitch = 0;
-		displayMinutes.textContent = breakTime.textContent;
-		displaySeconds.textContent = "00";
-		countdown();
-	}
+//start, stop and reset buttons
 
-	else if(displayMinutes.textContent == 0 && displaySeconds.textContent == 0 && breakSwitch == 0){
-		displayMinutes.textContent = "00";
-		displaySeconds.textContent = "00";	
-	}
+stopButton.addEventListener("click",stopInterval);
 
-	else if(displaySeconds.textContent == 0){
-		displaySeconds.textContent = 59;
-		displayMinutes.textContent = displayMinutes.textContent - 1;
-	}
-		
-	else if(displaySeconds.textContent < 11){
-		displaySeconds.textContent = "0" + (displaySeconds.textContent -1);
-	}
-
-	else{
-			displaySeconds.textContent = displaySeconds.textContent -1;		
-		}
-
-	},1000)
+function stopInterval() {
+	startButton.removeAttribute("disabled");
+	removeInterval();
 }
 
-function resetInterval(){
-	startButton.removeAttribute("disabled");
+function removeInterval() {
 	clearInterval(interval);
 	interval = "";
+}
+
+resetButton.addEventListener("click",function() {
+	stopInterval();
+	resetInterval();
+	twoDigitMinutes();
+});
+
+function resetInterval() {
+	displayMinutes.textContent = focusTime.textContent;
+	twoDigitMinutes();
+	displaySeconds.textContent = "00";
+	breakSwitch = false;
+}
+
+function twoDigitMinutes(){
+	if(displayMinutes.textContent < 10) {
+		displayMinutes.textContent = "0" + Number(displayMinutes.textContent);
+	}
+}
+
+startButton.addEventListener("click", countdown);
+
+function countdown() {
+	interval = setInterval(function() {
+		startButton.setAttribute("disabled",true);
+
+		if(displayMinutes.textContent == 0 && displaySeconds.textContent == 0 && breakSwitch == false) {
+			removeInterval();
+			displayMinutes.textContent = breakTime.textContent;
+			twoDigitMinutes();
+			displaySeconds.textContent = "00";
+			breakSwitch = true;
+			alert("switch to break");
+			countdown();
+		}
+
+		else if(displayMinutes.textContent == 0 && displaySeconds.textContent == 0 && breakSwitch == true){
+			displayMinutes.textContent = "00";
+			displaySeconds.textContent = "00";
+			stopInterval();
+			resetInterval();
+		}
+
+		else if(displaySeconds.textContent == 0) {
+			displaySeconds.textContent = 59;
+			displayMinutes.textContent = displayMinutes.textContent - 1;
+			twoDigitMinutes();
+		}
+
+		else if(displaySeconds.textContent <= 10) {
+			displaySeconds.textContent = "0" + (displaySeconds.textContent -1);
+		}
+
+		else{
+				displaySeconds.textContent = displaySeconds.textContent -1;
+			}
+
+	},1000)
+
 }
