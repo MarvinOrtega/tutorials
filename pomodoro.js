@@ -38,6 +38,12 @@ breakMinusButton.addEventListener("click",function(){
 
 stopButton.addEventListener("click",stopInterval);
 
+resetButton.addEventListener("click",function() {
+	stopInterval();
+	resetInterval();
+	twoDigitMinutes();
+});
+
 function stopInterval() {
 	startButton.removeAttribute("disabled");
 	removeInterval();
@@ -47,12 +53,6 @@ function removeInterval() {
 	clearInterval(interval);
 	interval = "";
 }
-
-resetButton.addEventListener("click",function() {
-	stopInterval();
-	resetInterval();
-	twoDigitMinutes();
-});
 
 function resetInterval() {
 	displayMinutes.textContent = focusTime.textContent;
@@ -79,7 +79,6 @@ function countdown() {
 			twoDigitMinutes();
 			displaySeconds.textContent = "00";
 			breakSwitch = true;
-			alert("switch to break");
 			countdown();
 		}
 
@@ -105,5 +104,7 @@ function countdown() {
 			}
 
 	},1000)
+
+// check this --> https://stackoverflow.com/questions/20618355/the-simplest-possible-javascript-countdown-timer
 
 }
