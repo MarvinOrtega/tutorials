@@ -19,16 +19,16 @@ disableSelections();
 
 resetButton.addEventListener("click",reset);
 
-start.addEventListener("click",function(){
+start.addEventListener("click",function() {
 	if((mode.checked == true && sequenceHolder.length >= 0) || (mode.checked == false && sequenceHolder.length == 0)) {
 		reset();
 		mode.setAttribute("disabled",true);
-		start.setAttribute("disabled",true);	
-		createSeries();	
-		addSequence();	
+		start.setAttribute("disabled",true);
+		createSeries();
+		addSequence();
 		highlightLoop();
-			
 	}
+
 	else if(mode.checked == false && sequenceHolder.length > 0){
 		endDisplay();
 		clicked = [];
@@ -36,13 +36,13 @@ start.addEventListener("click",function(){
 		clickCount = 0;
 		mode.setAttribute("disabled",true);
 		start.setAttribute("disabled",true);
-		highlightLoop();	
+		highlightLoop();
 	}
-		
+
 });
 
 next.addEventListener("click",function(){
-	endTimer();	
+	endTimer();
 	clicked = [];
 	displayCount = 0;
 	clickCount = 0;
@@ -53,31 +53,31 @@ next.addEventListener("click",function(){
 	highlightLoop();
 });
 
-for(var i = 0; i < selections.length; i ++){ 
+for(var i = 0; i < selections.length; i ++){
 	selections[i].addEventListener("click",function(){
 		playAudio();
 		endTimer();
 		var key = this.value;
 		clicked.push(key);
 		setTimeout(function(){
-			compare();	
+			compare();
 		},500);
-		
+
 	});
 }
 
-function createSeries(){
+function createSeries() {
 	sequenceHolder = [];
 	for(var i = 0; i < 20; i++){
 		sequenceHolder.push(Math.floor(Math.random() *(5 - 1) + 1));
 	}
 }
 
-function addSequence(){
+function addSequence() {
 	sequence.push(sequenceHolder[counter.textContent-1]);
 }
 
-function highlightLoop(){
+function highlightLoop() {
 	disableSelections();
 	next.setAttribute("disabled",true);
 	displayInterval = setInterval(function(){
@@ -87,10 +87,10 @@ function highlightLoop(){
 		}
 		else{
 			endDisplay();
-			enableSelections();	
+			enableSelections();
 			startTimer();
-	    }		
-	},1200);	
+	    }
+	},1200);
 }
 
 function highlightButton(num){
@@ -98,10 +98,10 @@ function highlightButton(num){
 	playAudio();
 	setTimeout(function(){
 		document.querySelector('input[name="' + sequence[num]  + '"]').classList.remove('textBold');
-	},200);		
+	},200);
 }
 
-function compare(){	
+function compare(){
 	if((clickCount == 20) && (sequence.length == 20) && (clicked[clickCount] == sequence[clickCount]))
 	{
 		endGame();
@@ -110,8 +110,8 @@ function compare(){
 
 	else if(( clickCount >= sequence.length) || (clicked[clickCount] != sequence[clickCount])){
 	  loseGame();
-	  next.setAttribute("disabled",true); 
-	  mode.removeAttribute("disabled"); 
+	  next.setAttribute("disabled",true);
+	  mode.removeAttribute("disabled");
 	  disableSelections();
 	  endTimer();
 	}
@@ -128,19 +128,19 @@ function compare(){
 	    	startTimer();
 	    	clickCount++;
 	    }
-	    
+
 	  }
 }
 
 function disableSelections(){
 	for (var i = 0; i < selections.length; i++){
-	    selections[i].setAttribute("disabled",true);	
+	    selections[i].setAttribute("disabled",true);
 	}
 }
 
 function enableSelections(){
 	for (var i = 0; i < selections.length; i++){
-	    selections[i].removeAttribute("disabled");	
+	    selections[i].removeAttribute("disabled");
 	}
 }
 
@@ -153,7 +153,7 @@ function reset(){
 	clickCount = 0;
 	counter.textContent = 1;
 	endDisplay();
-	endGame();	
+	endGame();
 }
 
 function startTimer(){
@@ -178,9 +178,9 @@ function loseGame(){
 }
 
 function endGame(){
-	next.setAttribute("disabled",true); 
+	next.setAttribute("disabled",true);
 	mode.removeAttribute("disabled");
-	start.removeAttribute("disabled"); 
+	start.removeAttribute("disabled");
 	disableSelections();
 	endTimer();
 }
